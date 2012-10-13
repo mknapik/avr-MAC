@@ -47,7 +47,7 @@
 /* === Globals ============================================================= */
 
 /* Size constants for PHY PIB attributes */
-static FLASH_DECLARE(uint8_t phy_pib_size[]) =
+static FLASH_DECLARE(const uint8_t phy_pib_size[]) =
 {
     sizeof(uint8_t),                // 0x00: phyCurrentChannel
     sizeof(uint32_t),               // 0x01: phyChannelsSupported
@@ -63,7 +63,7 @@ static FLASH_DECLARE(uint8_t phy_pib_size[]) =
 #define MAX_PHY_PIB_ATTRIBUTE_ID            (phySymbolsPerOctet)
 
 /* Size constants for MAC PIB attributes */
-static FLASH_DECLARE(uint8_t mac_pib_size[]) =
+static FLASH_DECLARE(const uint8_t mac_pib_size[]) =
 {
     sizeof(uint8_t),                // 0x40: macAckWaitDuration
     sizeof(uint8_t),                // 0x41: macAssociationPermit
@@ -137,7 +137,7 @@ static FLASH_DECLARE(uint8_t mac_sec_pib_size[]) =
 
 
 /* Size constants for Private PIB attributes */
-static FLASH_DECLARE(uint8_t private_pib_size[]) =
+static FLASH_DECLARE(const uint8_t private_pib_size[]) =
 {
     sizeof(uint64_t)                // 0xF0: macIeeeAddress
 #ifdef TEST_HARNESS

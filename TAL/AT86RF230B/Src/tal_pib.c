@@ -36,7 +36,7 @@
 /*
  * Translation table converting register values to power levels (dBm).
  */
-static FLASH_DECLARE(int8_t tx_pwr_table[16]) =
+static FLASH_DECLARE(const int8_t tx_pwr_table[16]) =
 {
     3, /* 3.2 */
     2, /* 2.6 */

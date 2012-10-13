@@ -89,14 +89,14 @@
 /**
  * Tx power table in flash.
  */
-static FLASH_DECLARE ( uint8_t tx_pwr_table_NA[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_NA };
+static FLASH_DECLARE (const uint8_t tx_pwr_table_NA[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_NA };
 #if (EU_TX_PWR_TABLE == 1)
-static FLASH_DECLARE ( uint8_t tx_pwr_table_EU[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_EU1 };
+static FLASH_DECLARE (const uint8_t tx_pwr_table_EU[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_EU1 };
 #endif
 #if (EU_TX_PWR_TABLE == 2)
-static FLASH_DECLARE ( uint8_t tx_pwr_table_EU[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_EU2 };
+static FLASH_DECLARE (const uint8_t tx_pwr_table_EU[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_EU2 };
 #endif
-static FLASH_DECLARE ( uint8_t tx_pwr_table_China[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_CHINA };
+static FLASH_DECLARE (const uint8_t tx_pwr_table_China[TX_PWR_TABLE_SIZE]) = { TX_PWR_TABLE_CHINA };
 
 /* === PROTOTYPES ========================================================== */
 

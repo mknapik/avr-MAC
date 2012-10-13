@@ -42,7 +42,7 @@
 /* === Globals ============================================================= */
 
 #if (HIGHEST_STACK_LAYER == MAC)
-static FLASH_DECLARE(handler_t dispatch_table[LAST_MESSAGE + 1]) =
+static FLASH_DECLARE(const handler_t dispatch_table[LAST_MESSAGE + 1]) =
 {
     /* Internal message */
     [MLME_RESET_REQUEST]                  = mlme_reset_request,
@@ -156,7 +156,7 @@ static FLASH_DECLARE(handler_t dispatch_table[LAST_MESSAGE + 1]) =
 #endif /* (MAC_INDIRECT_DATA_BASIC == 1) */
 };
 #else
-static FLASH_DECLARE(handler_t dispatch_table[LAST_MESSAGE + 1]) =
+static FLASH_DECLARE(const handler_t dispatch_table[LAST_MESSAGE + 1]) =
 {
     /* Internal message */
     [MLME_RESET_REQUEST]                  = mlme_reset_request,
