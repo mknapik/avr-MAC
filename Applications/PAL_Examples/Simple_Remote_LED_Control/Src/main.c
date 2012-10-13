@@ -3,7 +3,7 @@
  *
  * @brief  Implementation of the PAL Demo Application "Simple Remote LED Control".
  *
- * $Id: main.c 22855 2010-08-11 08:20:55Z sschneid $
+ * $Id: main.c,v 1.3.2.2 2010/09/07 17:39:32 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -56,6 +56,7 @@ int main(void)
     app_init();
 
     app_set_led_value(0);
+    
     while(1)
     {
         app_task();
@@ -92,7 +93,11 @@ void app_init(void)
 #if (TAL_TYPE == ATMEGARF_TAL_1)
     pal_trx_irq_init_tx_end((FUNC_PTR)irq_tx_end_handler);
     pal_trx_irq_init_rx_end((FUNC_PTR)irq_rx_end_handler);
+#elif (TAL_TYPE == AT86RF212)
+    pal_trx_irq_init((FUNC_PTR)irq_trx_end_handler);
 #elif (TAL_TYPE == AT86RF230B)
+    pal_trx_irq_init((FUNC_PTR)irq_trx_end_handler);
+#elif (TAL_TYPE == AT86RF231)
     pal_trx_irq_init((FUNC_PTR)irq_trx_end_handler);
 #endif
 
@@ -122,8 +127,11 @@ void app_init(void)
     pal_trx_reg_read(RG_IRQ_STATUS);
 #if (TAL_TYPE == ATMEGARF_TAL_1)
     pal_trx_reg_write(RG_IRQ_MASK, _BV(TX_END_EN) | _BV(RX_END_EN));
-#elif (TAL_TYPE == AT86RF230B)
+#elif ((TAL_TYPE == AT86RF212) || (TAL_TYPE == AT86RF230B))
     pal_trx_bit_write(SR_TX_AUTO_CRC_ON, 1);
+    pal_trx_reg_write(RG_IRQ_MASK, TRX_IRQ_TRX_END);
+    pal_trx_irq_en();
+#elif (TAL_TYPE == AT86RF231)
     pal_trx_reg_write(RG_IRQ_MASK, TRX_IRQ_TRX_END);
     pal_trx_irq_en();
 #endif
@@ -240,18 +248,22 @@ void trx_set_state(uint8_t state)
  */
 uint8_t trx_frame_read(uint8_t *data)
 {
-uint8_t phr;
+    uint8_t phr=0;
 #if (TAL_TYPE == ATMEGARF_TAL_1)
     phr = *data = pal_trx_reg_read(RG_TST_RX_LENGTH);
     pal_trx_frame_read(data + 1,(phr&0x7f));
-#elif (TAL_TYPE == AT86RF230B)
+#elif ((TAL_TYPE == AT86RF212) || (TAL_TYPE == AT86RF230B))
     pal_trx_frame_read(&phr,1);
     pal_trx_frame_read(data,(phr&0x7f));
+#elif (TAL_TYPE == AT86RF231)
+    phr = *data;
+    pal_trx_frame_read(&phr, 1);
+    pal_trx_frame_read(data+2 ,(phr&0x7f));
 #endif
     return phr;
 }
 
-#if (TAL_TYPE == AT86RF230B)
+#if ((TAL_TYPE == AT86RF230B) || (TAL_TYPE == AT86RF231) || (TAL_TYPE == AT86RF212))
 /**
  * @brief Main IRQ handler.
  *
@@ -264,7 +276,17 @@ uint8_t phr;
  */
 void irq_trx_end_handler(void)
 {
-    pal_trx_reg_read(RG_IRQ_STATUS);
+    uint8_t status = 0;
+    status = pal_trx_reg_read(RG_IRQ_STATUS);
+
+#if ((TAL_TYPE == AT86RF231) || (TAL_TYPE == AT86RF212))
+    /* leave if transceiver throws wrong type of interrupt */
+    if( ! (status & TRX_IRQ_TRX_END) )
+    {
+        return;
+    }
+#endif
+
     if (tx_flag != 0)
     {
         irq_tx_end_handler();

@@ -1,0 +1,32 @@
+/**
+ * @file Wireless_UART_2.txt
+ *
+ * @brief  Description of TAL Example Wireless_UART_2
+ *
+ * @author
+ *      dresden elektronik: http://www.dresden-elektronik.de
+ *      Support email: support@dresden-elektronik.de
+ */
+/*
+ * Copyright (c) 2010, dresden elektronik All rights reserved.
+ *
+ */
+
+TAL Example Wireless_Uart_2
+
+
+Installation
+
+Flash the file Wireless_UART_2.hex/Wireless_UART_2.bin to two nodes and connect
+(via a serial connection, like USB or UART) the nodes to a terminal program. 
+
+The example implements an alternate Wireless UART, based on the TINY_TAL 
+Example Wireless_UART. It uses a timer to improve over-the-air-performance 
+through sending data block-wise instead of transmitting frames upon every 
+single byte received over the serial connection.
+
+On the radio side, it deploys a nonbeacon-enabled network. 
+Both nodes operate at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID.
+If the same short address settings is used, transmission problems may occur.
+
+Terminal program settings: No flow control, local echo should be disabled.

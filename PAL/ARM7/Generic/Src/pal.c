@@ -5,7 +5,7 @@
  *
  * This file implements generic PAL function for ARM7 MCUs.
  *
- * $Id: pal.c 21606 2010-04-14 14:09:54Z uwalter $
+ * $Id: pal.c,v 1.2.2.2 2010/09/07 17:38:25 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -23,6 +23,9 @@
 #include "pal_config.h"
 #include "pal_timer.h"
 #include "pal_internal.h"
+#ifdef USB0
+#include "pal_usb.h"
+#endif
 
 /* === Globals ============================================================= */
 
@@ -104,6 +107,13 @@ retval_t pal_init(void)
  */
 void pal_task(void)
 {
+    // since we won't touch existing ARM platforms
+    // and including pal_boardtypes is impossible (different MCUs)
+    // set a switch in the respective pal_config.h
+#if ((defined USB0) && (defined USE_FTDI_USB))
+    usb_handler();
+#endif
+
 #if (TOTAL_NUMBER_OF_TIMERS > 0)
     timer_service();
 #endif
@@ -198,8 +208,20 @@ void arm7_low_level_init(void)
 {
     uint8_t index;
 
-    /* Wait states for flash read and write set to 2 and 3 respectively. */
+    /*
+     * Wait states for flash read and write set to 2 and 3 respectively.
+     * Differ between S, X and XC versions.
+     */
+#if (PAL_TYPE == AT91SAM7X512) // || (PAL_TYPE == AT91SAM7S512)
+    AT91C_BASE_EFC0->EFC_FMR = AT91C_MC_FWS_1FWS;
+    AT91C_BASE_EFC1->EFC_FMR = AT91C_MC_FWS_1FWS;
+#elif  (PAL_TYPE == AT91SAM7XC256) || (PAL_TYPE == AT91SAM7X256) \
+    || (PAL_TYPE == AT91SAM7S256)
+//    || (PAL_TYPE == AT91SAM7S128) || (PAL_TYPE == AT91SAM7X128)
     AT91C_BASE_MC->MC_FMR = AT91C_MC_FWS_1FWS;
+#else
+    #error No chip definition ?
+#endif
 
     /* The main oscillator is initialized. */
     AT91C_BASE_PMC->PMC_MOR = BOARD_OSCOUNT | AT91C_CKGR_MOSCEN;
@@ -328,6 +350,7 @@ void pal_abort_handler(void)
  */
 void pal_alert(void)
 {
+    unsigned int i=0;
 #if (DEBUG > 0)
     bool debug_flag = false;
 #endif
@@ -335,7 +358,8 @@ void pal_alert(void)
 
     while (1)
     {
-        pal_timer_delay(0xFFFF);
+        for(i=0; i<10; i++)
+            pal_timer_delay(0xFFFF);
         ALERT_INDICATE();
 
 #if (DEBUG > 0)

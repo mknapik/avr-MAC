@@ -1,0 +1,173 @@
+/**
+ * @file native_Examples.txt
+ *
+ * @brief  Overview of the de native Examples
+ *
+ * $Id: native_Examples.txt,v 1.1.6.1 2010/09/07 17:39:31 dam Exp $
+ *
+ * @author    dresden elektronik: http://www.dresden-elektronik.de
+ * @author    Support email: support@dresden-elektronik.de
+ *
+ * Copyright (c) 2010, dresden elektronik All rights reserved.
+ *
+ */
+ 
+
++-----------------------------------------------------------------------------+
+|                                                                             |
+| The native Examples "deRFnative_nnn" demonstrate the native access to       |
+| resources (e.g. LED, Button) of dresden elektronik radio modules            | 
+| and related accessories like the SensorTerminalBoard or Node/Gateway-Board. |
+|                                                                             |
+| According to the underlying hardware architecture, they are split into the  |
+| subfolders 'ARM' and 'AVR'. Compared to AVR there are only few ARM-based    |
+| examples. If you want to get familar with the ARM-architecture, we          |
+| recommend to use the AT91-Softpacks instead which provide a large amount    |
+| of application examples of different kinds.                                 | 
+|                                                                             |
+| The AVR-based examples do neither use any stack layer nor API,              | 
+| the ARM-based examples use parts of the AT91-Lib.                           |
+|                                                                             |
++-----------------------------------------------------------------------------+
+
+
+ARM based examples
+------------------
+
+native Example: 'deRFnative_Button_LED' (ARM):
+==============================================
+This example shows how to implement a counter which is incremented/decremented
+upon button presses. The current counter value is displayed via LEDs.
+
+native Example 'deRFnative_Sensors' (ARM):
+==========================================
+This example shows how to access the sensors available on the deRFnode/gateway
+board. A timer cyclic gathers the sensor data and prints them on the debug unit. 
+By button press, the working mode may be changed such that a detection of the 
+board motion is possible.
+
+
+AVR based examples
+------------------
+
+native Example 'deRFnative_Button' (AVR):
+=========================================
+The native Example "deRFnative_Button" demonstrates the native access
+to IO resources (here Button and LED's) of the following platforms:
+   - Radio Controller Board
+   - Sensor Terminal Board
+   - deRFnode
+
+The example code changes the state of the LED's if the button is pressed.
+Button state is scanned from the timer interrupt and debounced
+by testing many times for the new state.
+
+native Example 'deRFnative_EEPROM_I2C' (AVR):
+=============================================
+The native Example "deRFnative_EEPROM_I2C" demonstrates the native access
+to EEPROM resources on the following platforms:
+   - Sensor Terminal Board (ONLY with deRFmega128 Rev. 2)
+   - deRFnode
+
+The example code simply write and read a test pattern to/from EEPROM.
+To start the test, open Hyperterminal (or any other terminal)
+and connect to the virtual COM port that is assigned to your
+platform (FTDI serial port).
+With the button you can start/restart the test and watch the
+results on terminal screen.
+
+There are 2 test scenarios:
+   - only a string test (write string to EEPROM and read back)
+     (this is sufficient to check proper working of EEPROM)
+   - a test which write data to complete address space of EEPROM,
+     read back data and check it
+     --> latter test can be enabled by setting macro 'MAKE_LARGE_TEST' to '1'
+
+ -> THIS APPLICATION ONLY WORKS ON deRFmega128-series REVISION 2 AND HIGHER
+ 
+native Example 'deRFnative_LED' (AVR):
+======================================
+The native Example "deRFnative_LED" demonstrates the native access
+to IO resources (here LED's) of the following platforms:
+   - Radio Controller Board
+   - Sensor Terminal Board
+   - deRFnode
+   
+The example code changes the state of the LED's every 500ms.
+This is done by timer interrupt.
+
+native Example 'deRFnative_Sensors' (AVR):
+==========================================
+The native Example "deRFnative_Sensors" demonstrates the native access
+to resources (temperature, light and acceleration sensor)
+of the following platforms:
+   - deRFnode
+
+The example code initialize all external sensors on deRFnode:
+   - ISL290 light sensor
+   - BMA150 acceleration sensor
+   - DS620 temperature sensor
+And read out actual values from each sensor if button 1 is pressed.
+The values will be print out via USB interface. Therefore you have to
+open Hyperterminal (or any other terminal) and connect to the virtual
+COM port that is assigned to your platform (FTDI serial port).
+
+Additionally acceleration sensor values print out, every time the
+sensor recognized any change (by moving deRFnode). This is done by
+timer interrupt handling. To enable this option make sure Jumper1
+(JP1) is connected to interrupt pin of BMA150 (pin2 and pin3 have
+to be connected on JP1).
+
+native Example 'deRFnative_SRAM' (AVR):
+=======================================
+The native Example "deRFnative_SRAM" demonstrates the native access
+to the SRAM of the following platform:
+   - Sensor Terminal Board
+   
+The example code simply write and read a test pattern to/from SRAM.
+To start the test, open Hyperterminal (or any other terminal)
+and connect to the virtual COM port that is assigned to your
+platform (FTDI serial port).
+
+With the button on SensTermBoard you can start the test
+and see the results on the terminal screen. 
+
+native Example 'deRFnative_Temp' (AVR):
+=======================================
+The native Example "deRFnative_Temp" demonstrates the native access to
+temperature sensor either on MCU or platform. The following platforms supported:
+   - Sensor Terminal Bord
+   
+If you want use temperature sensor which is provides on deRFnode platform,
+please see example application 'deRFnative_Sensors'.
+
+The example code reads out the value from temperature sensor
+and print the result to terminal. Any time the button is pressed
+the actual temperature is printed out again.
+To start the test, open Hyperterminal (or any other terminal)
+and connect to the virtual COM port that is assigned to your
+platform (FTDI serial port).
+
+Not every MCU combination use the same temperature sensor.
+
+Sensor Terminal Board + ATmega1281:
+      --> temperature sensor on Sensor Terminal Board
+Sensor Terminal Board + ATmega128RFA1:
+      --> internal temperature sensor from ATmega128RFA1
+
+native Example 'deRFnative_USB' (AVR):
+======================================
+The native Example "deRFnative_USB" demonstrates the native access
+to USB resources on the following platforms:
+   - Sensor Terminal Board
+   - deRFnode
+   
+The example code reads and writes bytes from USB interface.
+To start the test, open Hyperterminal (or any other terminal)
+and connect to the virtual COM port that is assigned to your
+platform (FTDI serial port).
+The examples codes waits for any character received via USB and answers 
+by writing "Hello World: <x>" to USB. Where <x> is the character received from USB. 
+
+
+ 

@@ -5,7 +5,7 @@
  *
  * This file implements timer related functions for ARM7 MCUs.
  *
- * $Id: pal_timer.c 22274 2010-06-17 09:18:02Z sschneid $
+ * $Id: pal_timer.c,v 1.2.2.2 2010/09/07 17:38:25 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -236,7 +236,17 @@ retval_t pal_timer_start(uint8_t timer_id,
     {
         case TIMEOUT_RELATIVE:
         {
-            if ((timer_count > MAX_TIMEOUT) || (timer_count < MIN_TIMEOUT))
+            // FIXME
+            // Limit timers that run longer that allowed to the max. possible timeout.
+            // This e.g. happens when starting a Timer waiting for Beacons
+            // while BO==15 && F_CPU>32MHz
+            // [refer to mac_start_missed_beacon_timer @mac_sync.c]
+            if (timer_count > MAX_TIMEOUT)
+            {
+                timer_count = MAX_TIMEOUT;
+            }
+
+            if ( (timer_count > MAX_TIMEOUT) || (timer_count < MIN_TIMEOUT))
             {
                 return PAL_TMR_INVALID_TIMEOUT;
             }

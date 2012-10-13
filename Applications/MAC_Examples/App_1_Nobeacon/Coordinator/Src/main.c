@@ -6,7 +6,7 @@
  * This is the source code of a simple MAC example. It implements the
  * firmware for the coordinator of a network with star topology.
  *
- * $Id: main.c 22858 2010-08-11 08:51:45Z sschneid $
+ * $Id: main.c,v 1.3.2.1 2010/09/06 11:50:52 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com

@@ -5,7 +5,7 @@
  *        in the example application of the coordinator in addition to the
  *        underlaying stack.
  *
- * $Id: app_config.h 18484 2009-10-12 13:58:14Z sschneid $
+ * $Id: app_config.h,v 1.3.2.2 2010/09/07 17:39:30 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -77,7 +77,7 @@ typedef enum
 /**
  * Defines the USB transmit buffer size
  */
-#define USB_TX_BUF_SIZE             (10)
+#define USB_TX_BUF_SIZE             (128)
 
 /**
  * Defines the USB receive buffer size

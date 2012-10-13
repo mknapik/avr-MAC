@@ -13,7 +13,7 @@
  * In order to actually use this header file, the build switch "MAC_USER_BUILD_CONFIG"
  * needs to be set in the corresponding Makefiles of this project.
  *
- * $Id: main.c 22913 2010-08-13 09:48:49Z sschneid $
+ * $Id: main.c,v 1.3.2.2 2010/09/07 17:39:37 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -166,6 +166,15 @@ int main(void)
 #endif
 #endif  /* SIO_HUB */
 
+    /*
+     * slight changes to due better visualization
+     * of current device roles upon startup
+     */
+    pal_led(LED_ROOT, LED_ON);
+    uint8_t k=0;
+    for(k=0; k<10; k++)
+        pal_timer_delay(0xD000);
+
     app_peripheral_init();
 
     if (button_pressed())
@@ -175,8 +184,10 @@ int main(void)
     else
     {
         node_type = LEAF;
-    }
 
+        pal_led(LED_ROOT, LED_OFF);
+    }
+    
     /*
      * Reset the MAC layer to the default values
      * This request will cause a mlme reset confirm ->

@@ -9,7 +9,7 @@
  * (i.e. frames with valid CRC) on the current channel (= DEFAULT_CHANNEL)
  * and forward them via serial I/O to a terminal.
  *
- * $Id: main.c 23020 2010-08-20 11:34:36Z sschneid $
+ * $Id: main.c,v 1.3.2.2 2010/09/07 17:39:35 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -499,6 +499,10 @@ static void print_start_menu(void)
 #elif (PAL_GENERIC_TYPE == ARM7)
     #if (PAL_TYPE == AT91SAM7X256)
         printf("AT91SAM7X256");
+    #elif (PAL_TYPE == AT91SAM7S256)
+        printf("AT91SAM7S256");
+    #elif (PAL_TYPE == AT91SAM7X512)
+        printf("AT91SAM7X512");
     #else
     #error "unknown PAL_TYPE";
     #endif

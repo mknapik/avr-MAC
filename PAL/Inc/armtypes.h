@@ -6,7 +6,7 @@
  * This file contains ARM type definitions that enable Atmel's 802.15.4
  * stack implementation to build using multiple compilers.
  *
- * $Id: armtypes.h 22828 2010-08-10 07:29:54Z sschneid $
+ * $Id: armtypes.h,v 1.3.2.2 2010/09/07 17:38:25 dam Exp $
  *
  */
 /**
@@ -146,6 +146,10 @@ uint16_t crc_ccitt_update(uint16_t crc, uint8_t data);
  */
 #define SHORTENUM           __packed
 
+//FIXME
+#define ADDR_COPY_DST_SRC_16(dst, src)  ((dst) = (src))
+#define ADDR_COPY_DST_SRC_64(dst, src)  ((dst) = (src))
+
 #define RAMFUNCTION         __ramfunc
 
 #define FORCE_INLINE(type, name, ...) \
@@ -168,6 +172,7 @@ static inline type name(__VA_ARGS__)
  * No intrinsic function is provided by GCC to enable and disable interrupt,
  * hence they are implemented in assembly language
  */
+ #if (PAL_GENERIC_TYPE == ARM7)
 #define sei()   do                          \
 {                                           \
     asm volatile ("MRS R0, CPSR");          \
@@ -190,6 +195,19 @@ static inline type name(__VA_ARGS__)
 
 #define nop()               do { asm volatile ("nop"); } while (0)
 
+#elif (PAL_GENERIC_TYPE == SAM3)
+#define sei()    (__enable_irq())    //Enable Interrupts
+#define cli()    (__disable_irq())    //Disable Interrupts
+
+/* Gets the current program status word */
+#define GET_CPSR(sreg)  sreg = __get_PRIMASK();
+
+/* Sets the current program status word */
+#define SET_CPSR(sreg)  __set_PRIMASK(sreg);
+
+#define nop()    (__NOP())
+#endif /*#if (PAL_GENERIC_TYPE == ARM7)*/
+
 #define EEGET(var, addr)    nop()
 
 #define ALIGN8BIT /**/
@@ -210,11 +228,16 @@ static inline type name(__VA_ARGS__)
 #define FLASH_DECLARE(x)    const x
 #define FUNC_PTR            void *
 #define PGM_READ_BYTE(x)    *(x)
+#define PGM_READ_WORD(x)    *(x)
+
+#include <string.h> // for memcpy
+#define ADDR_COPY_DST_SRC_16(dst, src)  memcpy((void*)(&(dst)), (void*)(&(src)), sizeof(uint16_t))
+#define ADDR_COPY_DST_SRC_64(dst, src)  memcpy((void*)(&(dst)), (void*)(&(src)), sizeof(uint64_t))
 
 #endif /* defined(__GNUC__) */
 
-#define ADDR_COPY_DST_SRC_16(dst, src)  ((dst) = (src))
-#define ADDR_COPY_DST_SRC_64(dst, src)  ((dst) = (src))
+//#define ADDR_COPY_DST_SRC_16(dst, src)  ((dst) = (src))
+//#define ADDR_COPY_DST_SRC_64(dst, src)  ((dst) = (src))
 
 /*
  * @brief Converts a 2 Byte array into a 16-Bit value

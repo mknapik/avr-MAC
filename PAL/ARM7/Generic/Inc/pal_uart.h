@@ -6,7 +6,7 @@
  * This header contains the function prototypes for transmit,
  * receive functions and macros used in UART module.
  *
- * $Id: pal_uart.h 16325 2009-06-23 16:40:23Z sschneid $
+ * $Id: pal_uart.h,v 1.2.2.2 2010/09/07 17:38:25 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -109,6 +109,8 @@ typedef void (*uart_irq_handler_t) (void);
      */                                                             \
     while ((AT91C_BASE_US0->US_CSR & AT91C_US_TXEMPTY) == 0);       \
     AT91C_BASE_US0->US_THR = tx_data;                               \
+    /* Wait for the transfer to complete */                         \
+    while ((AT91C_BASE_US0->US_CSR & AT91C_US_TXEMPTY) == 0);       \
 } while (0);
 
 /* Writes data in the UART data register */

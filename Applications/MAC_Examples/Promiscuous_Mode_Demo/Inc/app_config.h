@@ -5,7 +5,7 @@
  *        in the example application of the device in addition to the
  *        underlaying stack.
  *
- * $Id: app_config.h 17034 2009-08-05 09:05:22Z uwalter $
+ * $Id: app_config.h,v 1.2.2.2 2010/09/07 17:39:37 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -80,7 +80,7 @@ typedef enum
 /**
  * Defines the USB transmit buffer size
  */
-#define USB_TX_BUF_SIZE             (10)
+#define USB_TX_BUF_SIZE             (128)
 
 /**
  * Defines the USB receive buffer size

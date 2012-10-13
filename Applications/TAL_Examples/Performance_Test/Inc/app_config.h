@@ -4,7 +4,7 @@
  * @brief These are application-specific resources which are used
  *        in the application in addition to the underlaying stack.
  *
- * $Id: app_config.h 18132 2009-09-19 13:40:08Z uwalter $
+ * $Id: app_config.h,v 1.2.2.2 2010/09/07 17:39:31 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -58,7 +58,7 @@ typedef enum
 /*
  * USB transmit buffer size
  */
-#define USB_TX_BUF_SIZE             (10)
+#define USB_TX_BUF_SIZE             (128)
 
 /*
  * USB receive buffer size

@@ -5,7 +5,7 @@
  *
  * This header file contains the supported PAL types.
  *
- * $Id: pal_types.h 22804 2010-08-09 09:10:33Z yogesh.bellan $
+ * $Id: pal_types.h,v 1.2.2.2 2010/09/07 17:38:25 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -26,6 +26,8 @@
 #define XMEGA                           (0x03)
 #define AVR32                           (0x04)
 #define ARM7                            (0x05)
+#define SAM3                            (0x06)
+
 
 #if (PAL_GENERIC_TYPE == AVR)
     /* PAL_TYPE for AVR 8-bit MCUs */
@@ -61,6 +63,11 @@
      */
     #define AT91SAM7X256                (0x02)
     #define AT91SAM7XC256               (0x03)
+    #define AT91SAM7X512                (0x04)
+
+#elif (PAL_GENERIC_TYPE == SAM3)
+    /* PAL_TYPE for SAM3 MCUs */
+    #define AT91SAM3S4B                 (0x01)
 
 #elif (PAL_GENERIC_TYPE == MEGA_RF)
     /* PAL_TYPE for MEGA-RF single chips (MCU plus transceiver) */
@@ -78,7 +85,7 @@
 /* Depending on the generic device type include platform-dependend types (IAR, GCC) */
 #if ((PAL_GENERIC_TYPE == AVR) || (PAL_GENERIC_TYPE == XMEGA) || (PAL_GENERIC_TYPE == MEGA_RF))
 #include "avrtypes.h"
-#elif (PAL_GENERIC_TYPE == ARM7)
+#elif (PAL_GENERIC_TYPE == ARM7) || (PAL_GENERIC_TYPE == SAM3)
 #include "armtypes.h"
 #elif (PAL_GENERIC_TYPE == AVR32)
 #include "avr32types.h"

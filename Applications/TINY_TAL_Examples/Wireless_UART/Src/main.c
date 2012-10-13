@@ -3,7 +3,7 @@
  *
  * @brief  Main of TAL Example - Wireless_UART
  *
- * $Id: main.c 22963 2010-08-17 12:07:59Z sschneid $
+ * $Id: main.c,v 1.2.2.2 2010/09/07 17:39:30 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -66,6 +66,7 @@ tx_state_t;
 #define FRAME_OVERHEAD          (13)
 #endif
 
+#if (PAL_GENERIC_TYPE != SAM3)
 #ifdef UART0
 #define MAX_APP_DATA_LENGTH             (aMaxMACSafePayloadSize)
 #define SIO_CHANNEL                     (SIO_0)
@@ -75,6 +76,7 @@ tx_state_t;
 #define MAX_APP_DATA_LENGTH             (aMaxMACSafePayloadSize)
 #define SIO_CHANNEL                     (SIO_1)
 #endif
+#endif /* (PAL_GENERIC_TYPE != SAM3) */
 
 #ifdef USB0
 /*
@@ -83,6 +85,14 @@ tx_state_t;
  */
 #define MAX_APP_DATA_LENGTH             (UART_MAX_TX_BUF_LENGTH - 1)
 #define SIO_CHANNEL                     (SIO_2)
+#endif
+
+/**
+ * Ensure that we MAX_APP_DATA_LENGTH is definied, even if communication
+ * goes not over the SIO_HUB (i.e. use DBGU on ARM modules)
+ */
+#ifndef MAX_APP_DATA_LENGTH
+#define MAX_APP_DATA_LENGTH             (aMaxMACSafePayloadSize)
 #endif
 
 #if (NO_OF_LEDS >= 3)

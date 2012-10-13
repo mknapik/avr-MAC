@@ -3,7 +3,7 @@
  *
  * @brief  Description of TAL Example Wireless_UART
  *
- * $Id: Wireless_UART.txt 21525 2010-04-13 08:27:12Z sschneid $
+ * $Id: Wireless_UART.txt,v 1.1.4.1 2010/09/06 11:50:52 dam Exp $
  *
  */
 /**

@@ -3,7 +3,7 @@
  *
  * @brief  Main of TAL Example - Performance_Test
  *
- * $Id: main.c 22695 2010-07-27 13:13:57Z sschneid $
+ * $Id: main.c,v 1.2.2.2 2010/09/07 17:39:31 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -382,9 +382,19 @@ static void print_main_menu(void)
 #elif (PAL_GENERIC_TYPE == ARM7)
     #if (PAL_TYPE == AT91SAM7X256)
         printf("AT91SAM7X256");
+    #elif (PAL_TYPE == AT91SAM7S256)
+        printf("AT91SAM7S256");
+    #elif (PAL_TYPE == AT91SAM7X512)
+        printf("AT91SAM7X512");
     #else
     #error "unknown PAL_TYPE";
     #endif
+#elif (PAL_GENERIC_TYPE == SAM3)
+    #if (PAL_TYPE == AT91SAM3S4B)
+        printf("AT91SAM3S4B");
+    #else
+    #error "unknown PAL_TYPE";
+#endif
 #elif (PAL_GENERIC_TYPE == MEGA_RF)
     /* no putput */
 #else
@@ -658,9 +668,9 @@ static void configure_frame_sending(void)
 
 /**
  * @brief Start the test procedure
-         */
+ */
 static void start_test(void)
-        {
+{
     if (op_mode == TX_OP_MODE)
     {
         printf("\r\nTransmitting... Wait until test is completed.");
@@ -908,7 +918,6 @@ void tal_ed_end_cb(uint8_t energy_level)
             }
         }
 #endif
-
     }
 
     /* Check if all channels were scanned. */

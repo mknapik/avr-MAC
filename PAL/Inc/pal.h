@@ -6,7 +6,7 @@
  * This header file declares prototypes of PAL APIs, enumerations
  * used by TAL and MAC.
  *
- * $Id: pal.h 22804 2010-08-09 09:10:33Z yogesh.bellan $
+ * $Id: pal.h,v 1.2.2.4 2010/09/09 16:40:14 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -337,7 +337,7 @@ void pal_trx_irq_init_aes_ready(FUNC_PTR trx_irq_cb);
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_en()                ENABLE_TRX_IRQ()
+#define pal_trx_irq_en()                (ENABLE_TRX_IRQ())
 
 /**
  * @brief Enables the transceiver timestamp interrupt
@@ -350,7 +350,7 @@ void pal_trx_irq_init_aes_ready(FUNC_PTR trx_irq_cb);
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_en_tstamp()         ENABLE_TRX_IRQ_TSTAMP()
+#define pal_trx_irq_en_tstamp()         (ENABLE_TRX_IRQ_TSTAMP())
 
 /**
  * @brief Disables the transceiver main interrupt
@@ -363,7 +363,7 @@ void pal_trx_irq_init_aes_ready(FUNC_PTR trx_irq_cb);
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_dis()               DISABLE_TRX_IRQ()
+#define pal_trx_irq_dis()               (DISABLE_TRX_IRQ())
 
 /**
  * @brief Disables the transceiver timestamp interrupt
@@ -376,7 +376,7 @@ void pal_trx_irq_init_aes_ready(FUNC_PTR trx_irq_cb);
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_dis_tstamp()        DISABLE_TRX_IRQ_TSTAMP()
+#define pal_trx_irq_dis_tstamp()        (DISABLE_TRX_IRQ_TSTAMP())
 #endif /* #if (PAL_GENERIC_TYPE != MEGA_RF) */
 
 /**
@@ -384,14 +384,14 @@ void pal_trx_irq_init_aes_ready(FUNC_PTR trx_irq_cb);
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_flag_clr()          CLEAR_TRX_IRQ()
+#define pal_trx_irq_flag_clr()          (CLEAR_TRX_IRQ())
 
 /**
  * @brief Clears the transceiver timestamp interrupt
  *
  * @ingroup apiPalApi
  */
-#define pal_trx_irq_flag_clr_tstamp()   CLEAR_TRX_IRQ_TSTAMP()
+#define pal_trx_irq_flag_clr_tstamp()   (CLEAR_TRX_IRQ_TSTAMP())
 
 #if (PAL_GENERIC_TYPE == MEGA_RF)
 /**
@@ -746,7 +746,7 @@ void pal_trx_aes_wrrd(uint8_t addr, uint8_t *idata, uint8_t length);
 #endif  /* defined(PAL_USE_SPI_TRX) */
 
 
-#if defined(SIO_HUB) || defined(DOXYGEN)
+#if (defined(SIO_HUB) || defined(DOXYGEN) || (PAL_GENERIC_TYPE==ARM7))
 /*
  * Prototypes for Stream I/O interface
  */
@@ -789,7 +789,7 @@ uint8_t pal_sio_tx(uint8_t sio_unit, uint8_t *data, uint8_t length);
  * @ingroup apiPalApi
  */
 uint8_t pal_sio_rx(uint8_t sio_unit, uint8_t *data, uint8_t max_length);
-#endif  /* SIO_HUB */
+#endif  /* (defined(SIO_HUB) || defined(DOXYGEN) || (PAL_GENERIC_TYPE==ARM7)) */
 
 
 /**

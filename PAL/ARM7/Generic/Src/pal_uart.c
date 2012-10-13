@@ -6,7 +6,7 @@
  * This file implements ARM7 UART related functions
  * and reception functions.
  *
- * $Id: pal_uart.c 22853 2010-08-11 08:10:53Z sschneid $
+ * $Id: pal_uart.c,v 1.3.2.2 2010/09/07 17:38:25 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -70,7 +70,7 @@ void sio_uart_0_init(uint32_t baud_rate)
     /* Pointer to the UART0 base. */
     uart_ptr = AT91C_BASE_US0;
 
-    /* Iinterrupt handler for UART0. */
+    /* Interrupt handler for UART0. */
     irq_handler = uart0_irq_handler;
 
     /*

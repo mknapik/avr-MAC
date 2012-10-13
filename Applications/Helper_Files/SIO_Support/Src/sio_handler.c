@@ -3,7 +3,7 @@
  *
  * @brief Implements the SIO (UART and USB) write and read functionalities
  *
- * $Id: sio_handler.c 16792 2009-07-29 15:56:05Z sschneid $
+ * $Id: sio_handler.c,v 1.2.2.3 2010/09/09 16:39:30 dam Exp $
  *
  * @author    Atmel Corporation: http://www.atmel.com
  * @author    Support email: avr@atmel.com
@@ -16,19 +16,18 @@
 
 /* === Includes ============================================================ */
 
-#ifdef SIO_HUB
 #include <stdio.h>
 #include "pal.h"
 #include "sio_handler.h"
+#include "pal_types.h"
+
+#if ((defined SIO_HUB) || (PAL_GENERIC_TYPE == ARM7))
 
 /* === Macros ============================================================== */
 
-
 /* === Globals ============================================================= */
 
-
 /* === Prototypes ========================================================== */
-
 
 /* === Implementation ====================================================== */
 
@@ -39,8 +38,16 @@ int _sio_putchar(char data)
 int _sio_putchar(char data, FILE *dummy)
 #endif
 {
+#if (PAL_GENERIC_TYPE == ARM7) && !defined (SIO_HUB)
+    DBGU_PutChar(data);
+#elif (PAL_GENERIC_TYPE == SAM3) && !defined (SIO_HUB)
+    UART_PutChar(data);
+#else
+    
     uint8_t c = data;
 
+#if 0
+    // we dont like line end replacements
     if (c == '\n')
     {
         c = '\r';
@@ -58,6 +65,7 @@ int _sio_putchar(char data, FILE *dummy)
 
         c = data;
     }
+#endif
 
     while (0 == pal_sio_tx(SIO_CHANNEL, &c, 1))
     {
@@ -69,7 +77,7 @@ int _sio_putchar(char data, FILE *dummy)
         pal_task();
 #endif
     }
-
+#endif
     return (0);
 }
 
@@ -81,6 +89,12 @@ int _sio_getchar(void)
 int _sio_getchar(FILE *dummy)
 #endif
 {
+#if (PAL_GENERIC_TYPE == ARM7) && !defined (SIO_HUB)
+    return DBGU_GetChar();
+#elif (PAL_GENERIC_TYPE == SAM3) && !defined (SIO_HUB)
+    return UART_GetChar();
+#else
+
     uint8_t c;
 
     while (0 == pal_sio_rx(SIO_CHANNEL, &c, 1))
@@ -95,6 +109,7 @@ int _sio_getchar(FILE *dummy)
     }
 
     return c;
+#endif
 }
 
 
@@ -105,8 +120,19 @@ int _sio_getchar_nowait(void)
 int _sio_getchar_nowait(FILE *dummy)
 #endif
 {
-    uint8_t c;
+#if (PAL_GENERIC_TYPE == ARM7) && !defined (SIO_HUB)
+    if(!DBGU_IsRxReady())
+        return -1;
+    else
+        return DBGU_GetChar();
+#elif (PAL_GENERIC_TYPE == SAM3) && !defined (SIO_HUB)
+    if(!UART_IsRxReady())
+        return -1;
+    else
+        return UART_GetChar();
+#else
 
+    uint8_t c;
 #ifdef USB0
     /*
      * In case this is used in a while loop with USB,
@@ -125,8 +151,9 @@ int _sio_getchar_nowait(FILE *dummy)
     {
         return (-1);
     }
+#endif
 }
 
-#endif  /* SIO_HUB */
+#endif  /* ((defined SIO_HUB) || (PAL_GENERIC_TYPE == ARM7)) */
 
 /* EOF */
