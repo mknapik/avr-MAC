@@ -1,0 +1,15 @@
+ATMEL Corporation Inc.
+
+This file contains important information for the MAC used for
+802.15.4 transceivers and microcontrollers of ATMEL Corp.
+
+For license information see file:
+EULA.txt.
+
+For further information about how to proceed with the AT86RF230A transceiver please contact avr@atmel.com.
+
+This transceiver is placed (for example) on the following boards:
+- Radio Controller Board RCB230 V3.1
+- Radio Extender Board REB230 V2.1 or V2.2
+
+$Id: How_to_proceed_with_AT86RF230A.txt 19075 2009-11-04 08:26:54Z sschneid $

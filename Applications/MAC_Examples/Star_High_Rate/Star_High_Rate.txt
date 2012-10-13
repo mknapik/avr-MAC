@@ -1,0 +1,44 @@
+/**
+ * @file Star_High_Rate.txt
+ *
+ * @brief  Introduction of the MAC Example "Star_High_Rate"
+ *
+ * $Id: Star_High_Rate.txt 22862 2010-08-11 11:37:47Z sschneid $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+MAC Example - Star_High_Rate
+
+
+Brief Description
+
+The MAC Example Star High Rates deploys a nonbeacon-enabled network transmitting frames from the device to the
+Coordinator using high rates (i.e. Mbit/s).
+
+Switch on node one; LED 0 indicates that the node has started properly.
+Flashing of LED 1 indicates that the node is scanning its environment.
+Scanning is done three times on each available channel depending on the radio type.
+If no other network with the pre-defined channel and PAN Id is found,
+the node establishes a new network at the pre-defined channel (channel 20 for 2.4GHz radio).
+The successful start of a new network is indicated by switching LED 1 on.
+
+Switch on the other node;LED 0 indicates that the node has started properly.
+Flashing of LED 1 indicates that the node is scanning its environment.
+Scanning is again done three times on each available channel depending on the radio type.
+If a proper network is discovered, the node joins the existing network and indicates a successful association by switching on LED 1.
+
+Every two seconds this nodes sends out a dummy data packet using high rate (2MBits/s).
+If the packet is acknowledged by the other node the LED 2 is flashing.
+
+
+

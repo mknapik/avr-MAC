@@ -1,0 +1,26 @@
+/**
+ * @file MAC_Example_1.txt
+ *
+ * @brief  Description of MAC Example 1
+ *
+ * $Id: App_1_Nobeacon.txt 22720 2010-08-02 12:48:19Z awachtle $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+MAC Example 1
+
+
+Brief Description
+
+The basic MAC Example 1 deploys a nonbeacon-enabled network. The coordinator starts a PAN at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID. The device scans for this network and associates to the coordinator. Once the device is associated it uses a timer that fires every 2 seconds to transmit a random payload to the coordinator.
+For demonstration purposes the coordinator's configuration is limited to associate two devices at maximum.

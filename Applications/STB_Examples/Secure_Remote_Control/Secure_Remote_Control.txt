@@ -1,0 +1,47 @@
+/**
+ * @file Secure_Remote_Control.txt
+ *
+ * @brief  Description of STB Example Secure_Remote_Control
+ *
+ * $Id: Secure_Remote_Control.txt 15918 2009-06-04 14:22:34Z uwalter $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+STB Example Secure_Remote_Control (based on TAL)
+
+
+Installation
+
+Flash the file Secure_Remote_Control.hex to two nodes and (if available) connect (via a serial connection, like USB or UART) the nodes to a terminal program.
+
+Terminal program settings: No flow control.
+
+The basic STB Example Secure_Remote_Control deploys a nonbeacon-enabled network using ZigBee/CCM* security. The example application is based on the TAL.
+Both nodes operate at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID and use the same short address settings. More than two nodes should not be operated with the same settings.
+
+The application uses a button to initiate frame transmissions and LEDs to indicate the current status of the node.
+
+Once the node is powered up the LED_0 switched on permanently. If the node is powered while the button is pressed, the application runs in unsecured mode (LED_1 is off). Otherwise (i.e. button is not pressed during system start-up) the application runs in secured mode (LED_1 is on).
+
+If the button is pressed during operation, the node sends a frame which contains the message "Toggle light!". This message is either to be seen in plaintext or it is encrypted.
+
+A node in secured mode only transmits frames being encrypted using ZigBee/CCM* security, and also expects frames being encrypted. A node in unsecured mode only transmits frames with plaintext, and also expects frames with plaintext.
+
+If the transmitter has received an Acknowledgment frame as response to its frame transmission, it indicates the successful transmission by toggling the LED_2. If the transmission is not successfully, the LED_2 is flashing for a short time.
+
+Receiver is in secured mode: If the node has received a secured frame, that could be decrypted properly, the LED_2 is toggled. If the received frame is either unsecured or has a security error (e.g. incorrect key), the LED_2 is flashing for a short time.
+Receiver is in unsecured mode: If the node has received a plaintext frame, the LED_2 is toggled. If the received frame is secured, the LED_2 is flashing for a short time.
+
+If a serial terminal is used, the used mode (security on or off) and the status of the last frame transmission or reception is printed.
+
+Note: It is not recommended operating more than two nodes with the application simultaneously.

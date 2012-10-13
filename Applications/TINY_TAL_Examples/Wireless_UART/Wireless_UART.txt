@@ -1,0 +1,32 @@
+/**
+ * @file Wireless_UART.txt
+ *
+ * @brief  Description of TAL Example Wireless_UART
+ *
+ * $Id: Wireless_UART.txt 21525 2010-04-13 08:27:12Z sschneid $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel's Limited License Agreement --> EULA.txt
+ */
+
+TAL Example Wireless_Uart
+
+
+Installation
+
+Flash the file Wireless_UART.hex to two nodes and connect (via a serial connection, like USB or UART) the nodes to a terminal program. Disable the terminal program's setting "Enable local echo".
+
+If a byte is received via the serial connection from one node, the node transmits the byte to the other node. If the transmission was successful, the entered bytes are forwarded to the terminal indicating successful transmission.
+
+The basic TAL Example Wireless_UART deploys a nonbeacon-enabled network. The example application is based on the TAL.
+Both nodes operate at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID and use the same short address settings. More than two nodes should not be operated with the same settings.
+
+Terminal program settings: No flow control and local echo should be disabled.

@@ -1,0 +1,846 @@
+ATMEL Corporation Inc.
+
+This file contains release and version information for the MAC used for 802.15.4 transceivers and microcontrollers of ATMEL Corp. For license information see separate file: EULA.txt.
+
+Support contact: avr@atmel.com
+
+----------------------------------------------------------------------
+
+Release Version: 2.5.2
+Release Date: Aug 20, 2010
+Build: 23039
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20100110
+- AVR Studio 4.18 SP1
+- IAR Embedded Workbench for AVR version 5.50.2
+- IAR Embedded Workbench for ARM version 5.50.3
+
+Supported devices
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+- ATxmega256A3
+- ATxmega256D3
+- AT91SAM7X256
+- AT91SAM7XC256
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- RZ USB Stick,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+- AT91SAM7X-EK with Radio Extender Board Adapter (REX_ARM) for
+   - ARM Rev. 2 (for AT86RF230B)
+   - ARM Rev. 3 (for AT86RF231 and AT86RF212)
+- ATmega128RFA1-EK1
+- ZigBit 900 MHz Module (ATZB-900) on Meshbean2 Development Board
+- ZigBit 2.4 GHz Module (ATZB-24) on Meshbean2 Development Board
+- RZ600 Board with AT86RF230B on top of Xplain Board
+
+Changes to previous version (2.5.1)
+- Transceiver based AES for SAM7X platforms added
+- Support for RZ600 Board with AT86RF230B on top of Xplain Board added
+- Support for ZigBit 2.4 GHz Module (ATZB-24) on Meshbean2 Development Board added
+- High Data Rate MAC example Star_High_Rate (for 2Mbit/s) added
+- Promiscuous Mode application allows setting of specific channel
+- Bug Fixes:
+   - Fixed Tiny TAL application for large application data
+   MAC:
+   - Indirect frame handling in case of unsuccessful transmission attempts fixed
+   - Synchronization with beaconing networks for ARM platforms running at larger clock
+     speed than 32MHz fixed
+   TAL:
+   - Transmission collision of indirect frames  with beacon transmission avoided
+   - ATmega128RFA1: TX_END interrupt handling updated
+   TFA:
+   - megaRF: temperature measurement handling fixed
+   PAL:
+   - megaRF: main interrupt renamed to TX end interrupt
+   - Timestamping for ARM based platforms fixed
+   - DEBUG > 0 incl. utilzation of ASSERT for ARM platforms fixed
+   - USB overflow condition for data reception fixed
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an
+  IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0
+  might have external EEPROM values stored in the wrong format. Applications using these
+  boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE
+  address into the first eight bytes of MCU's EEPROM.
+- AT91SAM7X256: Subsequently polled indirect data frames not always acknowledged
+- ARM platforms running at larger clock speed than 32MHz are not supported in beaconing-mode
+
+----------------------------------------------------------------------
+
+Release Version: 2.5.1
+Release Date: Aug 02, 2010
+Build: 22690
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20100110
+- AVR Studio 4.18 SP1
+- IAR Embedded Workbench for AVR version 5.50.2
+- IAR Embedded Workbench for ARM version 5.50.3
+
+Supported devices
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+- ATxmega256A3
+- ATxmega256D3
+- AT91SAM7X256
+- AT91SAM7XC256
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- RZ USB Stick,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+- AT91SAM7X-EK with Radio Extender Board Adapter (REX_ARM) for
+   - ARM Rev. 2 (for AT86RF230B)
+   - ARM Rev. 3 (for AT86RF231 and AT86RF212)
+- ATmega128RFA1-EK1
+- ZigBit 900 MHz Module on MeshBean 900 Development Board
+
+Changes to previous version (2.4.2 and 2.5.0 (ATMEL internal))
+- Complete re-design of MCL and TAL interworking including new simplified TAL-API
+- Significant footprint reduction within TAL and MCL
+- Introduction of Tiny-TAL (lightweight TAL layer with smaller footprint)
+- Reduced size of large buffers
+- PAL:
+  - Support for ATxmega256D3 added
+  - Support for ZigBit 900 MHz Module added
+  - Relay support for Sensor Terminal Boards added
+  - Support for customer boards added by using compile switch VENDOR_BOARDTYPES
+  - Support for customer network stacks added by using compile switch VENDOR_STACK_CONFIG
+  - Significant code reduction for ATmega128RFA1 based platforms
+  - Restructured API for transceiver interrupt handling for code size reduction
+  - Implemented workaround for ATmega128RFA1 timer issue (3215) in file
+    PAL\MEGA_RF\ATMEGA128RFA1\Src\pal_timer.c, see function prog_ocr()
+  - Introduction of build ENABLE_ALL_TRX_IRQS used for MEGA_RF platforms in order to save
+    code size for available but currently unused transceiver interrupts; settings this build
+    switch enables all enhanced transceiver interrupts
+  - AT90USB1287: USB rx handling updated to avoid buffer overwrite
+- TAL:
+  - Callback function tal_rx_frame_cb(): second parameter "lqi" has been removed,
+    since it is now concatenated at the end of a received frame similar to ED value
+  - Function tal_prepare_beacon() has been removed since the beacon frame is now completely
+    assembled within the MCL
+  - AT86RF231: Antenna diversity control added.
+    Same antenna used for frame reception is selected for ACK transmission
+  - ATmega128RFA1: RX Safe Mode implemented for protection of received frames
+  - Bug fix for Slotted CSMA
+    - Receiver is switched on after no ACK has been received and during backoff
+      periods
+    - Guard time added before timer fires to track next beacon
+    - Receiver can be switched on even if tal_state == TAL_SLOTTED_CSMA
+  - Bug fix for receive buffer shortage and TAL queue overflow under high load conditions
+- TFA:
+  - Continuous transmission modes updated for CW and PRBS modes
+- MAC:
+  - Timestamp parameters in MAC-API in function usr_mcps_data_conf() and usr_mcps_data_ind()
+    is removed as default for code reduction; timestamp is enabled again in MAC-API by setting
+    compile switch ENABLE_TSTAMP
+  - Introduced zero-copy concept for payload of MAC data frames
+  - MAC status code LIMIT_REACHED for active and passive scanning supported
+  - Duplicate detection updated
+  - Indirect queue not limited anymore to 7 frames
+  - Simplified handling of indirect data frames
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an
+  IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0
+  might have external EEPROM values stored in the wrong format. Applications using these
+  boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE
+  address into the first eight bytes of MCU's EEPROM.
+- AT91SAM7X256: Subsequently polled indirect data frames not always acknowledged
+
+----------------------------------------------------------------------
+
+Release Version: 2.4.2
+Release Date: Feb. 9, 2010
+Build: 20275
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20100110
+- AVR Studio 4.18 SP1
+- IAR Embedded Workbench for AVR version 5.40.1
+- IAR Embedded Workbench for ARM version 5.41
+- One tool chain file (for IAR Embedded Workbench for AVR) needs to be patched if ATmega128RFA1 is used.
+
+Supported devices
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+- ATxmega256A3
+- AT91SAM7X256
+- AT91SAM7XC256
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- RZ USB Stick,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+- AT91SAM7X-EK with Radio Extender Board Adapter (REX_ARM) for
+   - ARM Rev. 2 (for AT86RF230B)
+   - ARM Rev. 3 (for AT86RF231 and AT86RF212)
+- ATmega128RFA1-EK1
+
+Changes to previous version (2.4.0)
+- Support of function pointers to functions residing in code area larger than 128K for IAR
+- Support of PAN-Id conflict detection
+- PAL:
+    - Support of AT91SAM7XC256
+- Security:
+    - Support of hardware AES for AT91SAM7XC256
+    - Renamed security build switch ENABLE_STB to STB_ON_SAL due to introduction
+      of new security build STB_ARMCRYPTO
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an
+  IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0
+  might have external EEPROM values stored in the wrong format. Applications using these
+  boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE
+  address into the first eight bytes of MCU's EEPROM.
+- AT91SAM7X256: Subsequently polled indirect data frames not always acknowledged
+- ATmega128RFA1:
+  - Supporting the ATmega128RFA1 for IAR Embedded Workbench (Version 5.40.1)
+    requires replacing the existing register file "iom128rfa1.h" that is installed with the
+    IAR Workbench (located in directory "\avr\inc" of the IAR Workbench installation directory)
+    by the register file (with the same name) that is provided by IAR systems as patch file.
+
+----------------------------------------------------------------------
+
+Release Version: 2.4.0
+Release Date: Jan. 26, 2010
+Build: 20021
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20100110
+- AVR Studio 4.18 SP1
+- IAR Embedded Workbench for AVR version 5.40.1
+- IAR Embedded Workbench for ARM version 5.41
+- One tool chain file (for IAR Embedded Workbench for AVR) needs to be patched if ATmega128RFA1 is used.
+
+Supported devices
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+- ATxmega256A3
+- AT91SAM7X256
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- RZ USB Stick,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+- AT91SAM7X-EK with Radio Extender Board Adapter (REX_ARM) for
+   - ARM Rev. 2 (for AT86RF230B)
+   - ARM Rev. 3 (for AT86RF231 and AT86RF212)
+- ATmega128RFA1-EK1
+
+Changes to previous version (2.3.1)
+- Applications:
+  - Added MAC Example App_3_Beacon_Payload
+  - Added MAC Example App_4_Beacon_Broadcast_Data
+- MAC Core Layer:
+  - Support of announcement of pending broadcast data by coordinator in beacon-enabled networks
+  - Handling of macAutoRequest=false during scan to allow detection of large number of networks
+  - Support of duplicate detection of received data frames
+  - Functional PIB access for Layer above MAC implemented;
+    allows for fast change of PIB attributes for RF4CE Network layer
+  - Simplified handling of MAC PIB attribute macRxOnWhenIdle;
+    - Changing of this PIB attribute results now in immediate change of the transceiver state
+    - Default state for all nodes is now radio off
+  - Bug fix for MAC hanging during the attempt to switch off the transceiver based on RxEnable timer
+    while the TAL is in busy state
+- TAL:
+    - Discontinued support for AT86RF230A including related hardware platforms;
+      For more information about how to proceed with AT86RF230A please contact avr@atmel.com
+- PAL:
+  - Bug fix in timer implementation of ATmega128RFA1
+  - Discontinued support of ATmega1284P: For a PAL implementation please contact Atmel Support
+  - Support of AT86RF231 and AT86RF212 on AT91SAM7X256
+  - Support of flexibel UART baud rate using build switch BAUD_RATE
+  - Support of ATmega128RFA1-EK1
+  - Support of ATxmega256A3
+- SAL and STB:
+  - Software AES and CCM* implementation for AT91SAM7X256 and AT86RF230B based systems available;
+    Contact avr@atmel.com
+- Tools: update of IAR-AVR project files due to changes of the compiler version
+- File platform_types.h merge to pal_types.h
+- MAC User Guide:
+  - Added description of porting to new platforms
+  - Added PICS table
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an
+  IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0
+  might have external EEPROM values stored in the wrong format. Applications using these
+  boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE
+  address into the first eight bytes of MCU's EEPROM.
+- AT91SAM7X256: Subsequently polled indirect data frames not always acknowledged
+- ATmega128RFA1:
+  - Supporting the ATmega128RFA1 for IAR Embedded Workbench (Version 5.40.1)
+    requires replacing the existing register file "iom128rfa1.h" that is installed with the
+    IAR Workbench (located in directory "\avr\inc" of the IAR Workbench installation directory)
+    by the register file (with the same name) that is provided by IAR systems as patch file.
+
+----------------------------------------------------------------------
+
+Release Version: 2.3.1
+Release Date: Sep. 14, 2009
+Build: 17924
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313
+- AVR Studio 4.17
+- IAR Embedded Workbench for AVR version 5.30.2
+- IAR Embedded Workbench for ARM version 5.40
+- Several tool chain files need to be patched if ATmega128RFA1 is used.
+- One tool chain files needs to be patched if ATxmega128A1 is used.
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+- AT91SAM7X256 (initial version)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+- AT91SAM7X-EK with Radio Extender Board Adapter (REX_ARM) for ARM Rev. 2 (for AT86RF230B)
+
+Changes to previous version (2.2.5)
+- Initial support for AT91SAM7X256
+- ATxmega MCU based AES support
+- TFA: CW test mode support for ATmega128RFA1, AT86RF212 and AT86RF231 added
+- Configuration switch renamed: USER_BUILD_CONFIG -> MAC_USER_BUILD_CONFIG
+- Transceiver based Random Number Generation implemented
+- Generation of random IEEE address for demo applications in case no valid IEEE address is available
+- Clock speed selection for ATxmega supported
+- User Guide: Hardware Platform description added
+- Bug fix: Missing Pending Address Spec field in case of USER_BUILD_CONFIG utilization
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an
+  IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0
+  might have external EEPROM values stored in the wrong format. Applications using these
+  boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE
+  address into the first eight bytes of MCU's EEPROM.
+- AT91SAM7X256: Subsequently polled indirect data frames not always acknowledged
+- ATmega128RFA1:
+  - Supporting the ATmega128RFA1 for IAR Embedded Workbench (Version 5.30.2)
+    requires replacing the existing register file "iom128rfa1.h" that is installed with the
+    IAR Workbench (located in directory "\avr\inc" of the IAR Workbench installation directory)
+    by the register file (with the same name) that is provided by IAR systems as patch file.
+  - Supporting the ATmega128RFA1 for WinAVR-20090313 (GCC compiler) requires
+    - Replacing the existing register file "iom128rfa1.h" that is installed with WinAVR-20090313
+      (located in directory "\avr\include\avr") by the register file (with the same name) that
+      is shipped with this package and located in the directory
+      "PAL\MEGA_RF\ATMEGA128RFA1\Inc\WinAVR_Patch", and
+    - Replacing the existing file "power.h" that is installed with WinAVR-20090313 (located
+      in directory "\avr\include\avr") by the file (with the same name) that is shipped with
+      this package and located in the directory "PAL\MEGA_RF\ATMEGA128RFA1\Inc\WinAVR_Patch".
+- ATXMEGA128A1: Supporting all implemented features of the ATxmega128A1 for WinAVR-20090313
+  (GCC compiler) requires replacing the existing register file "iox128a1.h" that is installed
+  with WinAVR-20090313 by the register file (with the same name) that is shipped with this
+  package and located in the directory "PAL\XMEGA\ATXMEGA128A1\Inc\WinAVR_Patch".
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.5 (ATMEL internal)
+Release Date: Jul. 28, 2009
+Build: 16766
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313
+- AVR Studio 4.17
+- IAR Embedded Workbench for AVR version 5.30
+- Several tool chain files need to be patched if ATmega128RFA1 is used.
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+
+Changes to previous version (2.2.4)
+- TAL: Filter tuning and PLL calibration mechanism implemented
+- RF4CE support moved to separate software package
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.4 (ATMEL internal)
+Release Date: Jul. 21, 2009
+Build: 16623
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313
+- AVR Studio 4.17
+- IAR Embedded Workbench for AVR version 5.30
+- Several tool chain files need to be patched if ATmega128RFA1 is used.
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+
+Changes to previous version (2.2.3)
+- Code used for sniffer application removed from tal_rx.c
+- MAC: Bug fix for beacon notify indications
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.3 (ATMEL internal)
+Release Date: Jul. 3, 2009
+Build: 16506
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313
+- AVR Studio 4.17
+- IAR Embedded Workbench for AVR version 5.30
+- Several tool chain files need to be patched if ATmega128RFA1 is used.
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega128RFA1
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit,
+- ATSTK600 with "REB to STK600 Adapter" and Radio Extender Boards,
+- STB Sensor Terminal Board (RCB Terminal Board) with Radio Controller Boards
+- RCB Breakout Board light with Radio Controller Boards
+
+Changes to previous version (2.2.2)
+- Reduced sensitivity handling for high data rate mode added
+- TAL for RF231: Number of bytes written to frame buffer for transmission reduced by one.
+- Board name changed or board configuration added: PLAIN, STK541, SENS_TERM_BOARD
+- Unnecessary register settings removed: default settings were written to trx after reset.
+- Parameter value for tal_tx_frame() added controlling IFS handling.
+- Remove Makefiles with debug configuration from release package
+- Remove .a90 files from release package;
+  keep .hex files as pre-compiles firmware of example applications only.
+- New device support: ATmega128RFA1
+- New board support: Key remote controller board (KEY_RC) added use in combination with RCB_6_3 and RCB_4_0
+- RF4CE: application added: Basic Demo, Key Remote Controller Demo, Terminal Target Demo, and Serial Interface
+- TFA: new API function: tfa_get_temperature()
+- PAL: new API function: pal_pwr_mode(); supporting sleep for MCU
+- Promiscuous Mode udpated
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.2 (ATMEL internal)
+Release Date: April 29, 2009
+Build: 15295
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313 release
+- AVR Studio 4.16 / AVR Studio 4.14
+- IAR Embedded Workbench for AVR version 5.20
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit.
+
+Changes to previous version (2.2.1)
+- Added MAC Example 2 Indirect traffic in nobeacon network
+- Serval bugs fixed: SPI (#2701), IFS added
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.1 (ATMEL internal)
+Release Date: Apr. 17, 2009
+Build: 14969
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313 release
+- AVR Studio 4.16 / AVR Studio 4.14
+- IAR Embedded Workbench for AVR version 5.20
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit.
+
+Changes to previous version (2.2.0)
+- Extended IEEE 802.15.4 MAC Reference Manual to cover API for TAL, PAL, TFA, SAL, STB, BMM, and QMM
+- Discontinued provision of example application hex files for AT86RF230A
+- IEEE address value accessible via private MAC PIB attribute
+- Buffer and queue management is excluded if total number of buffers is zero
+- Some minor bug fixes: implicit polling; frames with length field > 127 are discarded; performance improvement for SPI transfers
+
+Known issues
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.2.0
+Release Date: April. 09, 2009
+Build: 14918
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20090313 release
+- AVR Studio 4.16 / AVR Studio 4.14
+- IAR Embedded Workbench for AVR version 5.20
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.H)
+
+Supported hardware platforms
+- ATAVRRZ200 Demonstration Kit and ATAVRRZ201 pack of Radio-Controller Boards,
+- ATAVRRZ502 RF Accessory Kit as top modules for the STK500 starter kit and STK501 top module,
+- ATAVRRZRAVEN 2.4 GHz Evaluation and Starter Kit.
+
+Changes to previous version (2.1.1)
+- Introduction of user build concept (allows application to only include MAC functionality as required)
+- Added Promiscuous Mode based on IEEE 802.15.4-2006 and MAC example application Promiscuous_Mode_Demo
+- Added MAC Example Basic_Sensor_Network
+- Support of peer-to-peer communication including PAN Coordinator / Coordinator in nonbeacon-enabled networks.
+- Included MAC User Guide
+- PAL API: Parameter change of pal_ps_get()
+- PAL API: pal_pin_set() and pal_pin_get() replaced/removed
+- PAL: Introduction of NON_BLOCKING_SPI
+- MCL: Split internal_event queue into two queues
+- MCL: Re-design of MAC state machine
+- MCL: Support of IEEE 802.15.4-2006 added
+- MCL: Support of synchronization with beacon-enabled network prior to association
+- TAL: Support of channel page 5 (Chinese band) added incl. example applications
+- TFA Layer: Battery monitor (supply voltage measurement) read functionality added
+
+Known issues
+- Beacon-enabled networks: Power Management is not supported during inactive portions. Broadcast data is not indicated within beacons.
+- AT86RF230B: Timestamp parameter of MCPS-DATA.confirm messages (usr_mcsp_data_conf) invalid
+- AT86RF230B: Indirect data communication in beacon-enabled networks shows undefined behavior
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.1.1
+Release Date: Dec. 04, 2008
+Build: 12438
+
+System requirements for AVR-based MCUs - Supported Compiler/Tools
+- WinAVR-20080610 release
+- AVR Studio 4.14
+- IAR Embedded Workbench for AVR version 5.11B
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- AT86RF212
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.G)
+
+Changes to previous version (2.0.3)
+- TAL: support of AT86RF212 added
+- SAL/STB: security support introduced
+- PHY PIB phyTransmitPower is handled as defined by IEEE standard
+- TFA: Functions tfa_cca_perform() and tfa_ed_sample() added
+- High data rate modes introduced
+- STB example application "Secure Remote Control" added
+- STB example application "Secure Sensor" added
+- TAL example application "Performance Test" added
+- MAC and TAL library support removed
+
+Known issues
+- AVR GCC tool chain for Xmega: library bug with printf functionality
+- Firmware that is larger than 64k created with WinAVR-20080610 GCC for ATxmega128A1 shows undefined behavior; e.g. 32 MHz oscillator cannot be enabled. In the current Xmega WinAVR tool chain (version WinAVR-20080610) there is a bug for images larger than 64k size. This will be fixed by setting the ramp Z register to 0 at program start. Once the tool chain is fixed this shall be removed.
+- printf functionality provided by WinAVR-20080610 release used with ATxmega128A1 causes undefined behavior. This has impact to example applications, like Performance_Test.
+- Early Radio Controller Boards (RCB) version 5.3 labeled without IEEE address do not have an IEEE address stored into the external EEPROM. Early Radio Extender Boards (REB) version 5.0 might have external EEPROM values stored in the wrong format. Applications using these boards need to disable the build switch EXTERN_EEPROM_AVAILABLE and need to store an IEEE address into the first eight bytes of MCU's EEPROM.
+
+----------------------------------------------------------------------
+
+Release Version: 2.0.3
+Release Date: Oct. 16, 2008
+Build: 11436
+
+System requirements - Supported Compiler/Tools
+- WinAVR-20080610 release
+- AVR Studio 4.14
+- IAR EWW for Atmel AVR 5.11B
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231
+- ATmega1281
+- ATmega1284P (register defines for IAR support explicitly changed)
+- ATmega644P (register defines for IAR support explicitly changed)
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (rev.G)
+
+Changes to previous version (2.0.2)
+- PAL for ATxmega128A1 improved
+- TAL for AT86RF231 improved
+- Bug fix: UART use of circular buffer
+- EWW project files for ATxmega fixed
+- IAR debug output format changed: allow AVR Studio debugging
+- BMM API name changed (editorial changes only):
+  bmm_buffer_pool_init() to bmm_buffer_init()
+  qmm_flush_queue() to qmm_queue_flush()
+- PAL API changed:
+  - return value for pal_init() added/changed; LED control API added
+  - pal_get_ieee_addr() is extended to a generic persistence storage access
+    Configuration read from external EEPROM for AT86RF231 added
+  - pal_trx_buf_read() to pal_trx_frame_read() renamed (editorial change only)
+- TAL API changed: tal_tx_beacon_done_cb() removed
+- Calibration of RC oscillator updated
+- TFA for AT86RF231 introduced
+- Pre-compiled libraries are removed from release package
+- MAC API changed: mac_init() - parameter change
+- Support for AT86RF231 boards added: REB_4_1, RCB_4_0 and RCB_4_1
+- MAC application "Star" network added
+
+Known Issues
+- Firmware that is larger than 64k created with WinAVR GCC for ATxmega128A1 shows undefined behavior; e.g. 32 MHz oscillator cannot be enabled.
+- printf functionality provided by WinAVR-20080610 release used with ATxmega128A1 causes undefined behavior.
+
+----------------------------------------------------------------------
+
+Release Version: 2.0.2 (ATMEL internal)
+Release Date: Aug 20, 2008
+Build: 10722
+
+System requirements - Supported Compiler/Tools
+- WinAVR-20080610 release
+- AVR Studio 4.14
+- IAR EWW for Atmel AVR 5.11B
+
+Installation
+- Unzip release file to a top level folder, like "c:\Atmel".
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- AT86RF231 (initial version)
+- ATmega1281
+- ATmega1284P (register defines for IAR support explicitly changed)
+- ATmega644P (register defines for IAR support explicitly changed)
+- AT90USB1287
+- ATmega2561
+- ATxmega128A1 (initial version)
+
+Changes to previous version (2.0.1)
+- TAL example "Wireless_UART" re-organized
+- TAL for AT86RF231 added
+- PAL for ATxmega128A1 added
+- Bug fix: UART 1 usage
+- PAL API change: pal_trx_read_timestamp()
+
+----------------------------------------------------------------------
+
+Release Version: 2.0.1
+Release Date: Aug 1, 2008
+Build: 10507
+
+System requirements - Supported Compiler/Tools
+- WinAVR-20080610 release
+- AVR Studio 4.14
+- IAR EWW for Atmel AVR 5.11B
+
+Installation
+- Unzip release file to a top level folder, like "c:\Atmel".
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- ATmega1281
+- ATmega1284P (register defines for IAR support explicitly changed)
+- ATmega644P (register defines for IAR support explicitly changed)
+- AT90USB1287
+- ATmega2561
+
+Changes to previous version (2.0.0)
+- Added TAL example Wireless_UART (excl. for AT90USB1287 and ATmega1284P)
+- Added TAL libraries (excl. for AT90USB1287 and ATmega1284P)
+- Added support of ATmega2561
+- Added IAR support for MAC libraries - EWW project files
+- Added IAR support for MAC example App_1_Nobeacon - EWW project files
+- Added IAR support for TAL libraries - EWW project files
+- Added IAR support for TAL example Wireless_UART - EWW project files
+- Added project files (for AVR Studio and IAR EWW) that make use of source files instead of libraries
+- Added MAC reference manual in html format
+
+----------------------------------------------------------------------
+
+Release Version: 2.0.0 (ATMEL internal)
+Release Date: June 27, 2008
+Build: 9800
+
+Supported Compiler/Tools
+- WinAVR-20080610 release
+- AVR Studio 4.14
+- IAR EWW for Atmel AVR 5.11B
+
+Supported devices
+- AT86RF230A
+- AT86RF230B
+- ATmega1281
+- ATmega1284P
+- ATmega644P
+- AT90USB1287
+
+Changes to previous version (1.5)
+- Major architecture change
+- Support of several MCUs and RF transceivers
+- Minor changes to WPAN API: aligned to 802.15.4-2003 specification
+
+$Id: MAC_Release_Notes.txt 23038 2010-08-23 07:05:51Z sschneid $

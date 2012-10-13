@@ -1,0 +1,29 @@
+/**
+ * @file Performance_Test.txt
+ *
+ * @brief  Description of TAL Example Performance_Test
+ *
+ * $Id: Performance_Test.txt 15918 2009-06-04 14:22:34Z uwalter $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+TAL Example: Performance Test
+=============================
+The TAL Example "Performance_Test" is a terminal-based application placed on top of the TAL API. It demonstrates transceiver performance including high data rate modes. Configuration parameters are set using a terminal program.
+
+Installation
+Flash the file Performance.hex to two nodes and connect (via a serial connection, like USB or UART) the nodes to a terminal program. Enable the terminal program's setting "Enable local echo". After program start, press any key to get a configuration menu.
+Terminal program settings: No flow control.
+
+Operation
+Configure the displayed parameter using the terminal program. Set one node to receive mode and one to transmit mode. First start the receiving node and then the transmitting node. Keep the program running until the terminal program of the transmitting node reports the end of the test. By entering any key at the receiving side, the receiving result of the last test is displayed.

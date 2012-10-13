@@ -1,0 +1,52 @@
+/**
+ * @file Promiscuous_Mode_Demo.txt
+ *
+ * @brief  Introduction of the MAC Example "Promiscuous Mode Demo"
+ *
+ * $Id: Promiscuous_Mode_Demo.txt 23014 2010-08-20 10:44:09Z sschneid $
+ *
+ * @author    Atmel Corporation: http://www.atmel.com
+ * @author    Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+MAC Example for 802.15.4 - Promiscuous Mode Demo
+
+
+Introduction
+============
+This example is based on the MAC layer API implementing a network diagnostic tool by using the promiscuous mode as described in IEEE 802.15.4-2006 (section 7.5.6.5 Promiscuous Mode).
+
+Build Information
+=================
+The firmware for the MAC example "Promiscuous Mode Demo" can be created in three ways: Using the corresponding Makefile directly, executing the Makefile from the AVR Studio or building it from the IAR EWW.
+Only one node type is actually involved in this example. It is recommended to use another application (e.g. MAC_Star_Nobeacon) in conjunction on the same channel in order verify the proper functioning of this demo.
+
+During the build process the switch PROMISCUOUS_MODE is enabled.
+
+Requirements
+============
+This application requires a serial connection for proper demonstration of the promiscuous mode. Depending on the available Serial I/O interface for each board this can be either UART or USB (see corresponding Makefiles or IAR project files). In order to see the output of the application please start a terminal application on your host system.
+
+Implementation
+==============
+The application works as follows:
+1) The node performs a reset of the stack (wpan_mlme_reset_request()).
+2) After successful processing of the reset, the channel for operation can be entered by the user
+3) Afterwards the promiscuous mode is switched on immediately.
+4) In the serial terminal on the host system printouts indicate the detected hardware (radio and microcontroller), set channel and channel page, and the status of promiscuous mode.
+5) Now the application will print each received frame (that has a valid CRC) on the terminal. In order to limit the load on the serial connections, currently only the following items are displayed:
+- Number of received frame
+- Type of frame
+- Content of frame (received octets in hexadecimal form), this includes the MAC Header (MHR) of the original frame and the payload within this frame.
+6)In the application itself the received frame is already parsed so that the variable app_parse_data contains all information for the MAC header (i.e. addressing information) of the received frame already in a structure of type prom_mode_payload_t.
+
+Note:
+In case the build switch "HIGH_DATA_RATE_SUPPORT" is set within in the Makefiles or IAR project files, the channel page can also be entered
+by the user. This allows for using the application also for high rates.
+
+

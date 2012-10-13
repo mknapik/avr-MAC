@@ -1,0 +1,12 @@
+ATMEL Corporation Inc.
+
+This file contains important information for the MAC used for
+802.15.4 transceivers and microcontrollers of ATMEL Corp.
+
+For license information see file:
+EULA.txt.
+
+For further information about how to get the software AES implementation for all system without hardware AES support
+(such as AT91SAM7X256 or AT86RF230) please contact avr@atmel.com.
+
+$Id: How_to_get_software_aes.txt 18738 2009-10-21 13:23:56Z sschneid $

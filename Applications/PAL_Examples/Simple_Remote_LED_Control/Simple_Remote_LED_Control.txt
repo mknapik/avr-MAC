@@ -1,0 +1,24 @@
+/**
+ * @file Simple_Remote_LED_Control.txt
+ *
+ * @brief  Overview of the PAL Examples
+ *
+ * $Id: Simple_Remote_LED_Control.txt 19770 2010-01-06 16:13:33Z sschneid $
+ *
+ * @author    Atmel Corporation: http://www.atmel.com
+ * @author    Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel's Limited License Agreement --> EULA.txt
+ */
+
+PAL Example: Simple_Remote_LED_Control
+======================================
+
+This is a simple sample application demonstrating that the radio chip can receive and
+transmit frames. As default the radio is in RX_ON state. When the button is
+pushed, the radio goes into transmit mode and transmits one frame.
+Right after transmitting, the radio goes back into listening mode. The received frames are
+signalled on the LEDs.

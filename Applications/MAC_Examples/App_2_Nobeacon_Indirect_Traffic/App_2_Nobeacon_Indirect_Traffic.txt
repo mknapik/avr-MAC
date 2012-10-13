@@ -1,0 +1,34 @@
+/**
+ * @file MAC_Example_1.txt
+ *
+ * @brief  Description of MAC Example 2
+ *
+ * $Id: App_2_Nobeacon_Indirect_Traffic.txt 17143 2009-08-12 11:19:31Z sschneid $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+MAC Example 2 (Indirect Traffic)
+
+
+Brief Description
+
+The basic MAC Example 2 deploys a nonbeacon-enabled network.
+The coordinator starts a PAN at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID.
+The device scans for this network and associates to the coordinator.
+Once the device is associated, it uses a timer that fires every 5 seconds to poll for pending data at the coordinator by means of transmitting a data request frame to the coordinator.
+On the other hand every 5 seconds the coordinator queues a dummy data frame for each associated device into its indirect frame queue.
+If the coordinator receives a data request frame from a particular device, it transmits the pending data frame to the device.
+
+The results of the proper data transmission/reception are printed to a terminal program via Serial I/O (UART or USB).
+
+For demonstration purposes the coordinator's configuration is limited to associate two devices at maximum.

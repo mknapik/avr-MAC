@@ -1,0 +1,48 @@
+/**
+ * @file Basic_Sensor_Network.txt
+ *
+ * @brief  Introduction of the MAC Example "Basic_Sensor_Network"
+ *
+ * $Id: Basic_Sensor_Network.txt 15918 2009-06-04 14:22:34Z uwalter $
+ *
+ * @author    Atmel Corporation: http://www.atmel.com
+ * @author    Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2009, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+MAC Example for 802.15.4 - Basic Sensor Network
+
+
+Introduction
+============
+This example is based on the MAC layer API implementing a basic sensor network. The network consists of devices being sensor nodes and nodes that provide router functionality. Using different node types a tree network can be established.
+The network route is a static route and the network and its routing path is configured during network setup. A tree topology is created from root to leaf nodes during the network setup. The network uses a pre-defined PAN Id (0xbeef) and channel (1 or 20).
+The sensor nodes gather their supply voltage value (battery status) and another sensor value, like temperature value. Every 10 s the node transmits the gather data to its parent. If the parent node is not the ROOT of the network, it forwards the received data further to its parent.
+
+Build Information
+=================
+The firmware for this MAC example can be created in several ways depending on the used tool chain: Using the corresponding Makefile directly, executing the Makefile from the AVR Studio or building it from the IAR EWW.
+Three node types (ROOT, ROUTER and LEAF) are involved in this example. All nodes are operated using the same firmware.
+
+The actual used MAC primitives are defined in the corresponding file "user_build_config.h" in directory "Inc" of this application.
+In order to use this header file, the build switch "USER_BUILD_CONFIG" needs to be set in the Makefiles of this project.
+There are several constant defines allowing to configure the application:
+- CHANNEL, default value: 20 for 2.4 GHz nodes and channel 1 for sub-1 GHz nodes.
+- PAN_ID, default value: 0xbeef
+- TX_INTERVAL_S, default value: 10 seconds
+
+Network Setup
+=============
+During application start the decision is made which node type is applied. If the push button is pressed during power-up, the node could be a ROOT or ROUTER node. Once the decision is made that the device behaves like a ROOT/ROUTER node, LED_0 is switched on. Otherwise if the push button is not pressed during node start-up, the node behaves as leaf node, i.e. pure sensor node. To connect a node during start-up procedure to its parent node, the push button needs to be pushed at the parent node. This causes at the parent node transmitting of broadcast frames. The address information provided with these broadcast frames are used by the leaf node identifying its parent.
+
+Operation
+=========
+Every TX_INTERVAL_S seconds the node transmits the sensor data to its parent. A LED is switched on indicating the active period.
+A router forwards all received data to its parent (if it has one). The root node prints the received data to the UART/USB output. The root and router nodes should be mains-powered devices.
+
+
+

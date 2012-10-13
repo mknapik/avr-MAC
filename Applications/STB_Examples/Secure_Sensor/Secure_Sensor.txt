@@ -1,0 +1,50 @@
+/**
+ * @file Secure_Sensor.txt
+ *
+ * @brief  Description of STB Example Secure_Sensor
+ *
+ * $Id: Secure_Sensor.txt 22720 2010-08-02 12:48:19Z awachtle $
+ *
+ */
+/**
+ *  @author
+ *      Atmel Corporation: http://www.atmel.com
+ *      Support email: avr@atmel.com
+ */
+/*
+ * Copyright (c) 2008, Atmel Corporation All rights reserved.
+ *
+ * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ */
+
+Secure Sensor
+
+
+Brief Description
+
+The basic STB Example Secure_Sensor deploys a nonbeacon-enabled network with encrypted and authenticated frames. The data sink (coordinator) starts a PAN at channel DEFAULT_CHANNEL with the PAN ID DEFAULT_PAN_ID. The sensor (device) scans for this network and associates to the data sink (coordinator). Once the sensor (device) is associated, it uses a timer that fires every 2 seconds to transmit a random payload (sensor measurement data) to the data sink.
+
+For demonstration purposes the coordinator's configuration is limited to associate two devices at maximum.
+
+
+The frames are secured according to ZigBee/CCM* network layer security:
+- The network header is omitted, only the auxiliary security header is constructed (14 byte long).
+- The applied security level is 0x06, i.e. encrypted payload, authentication applied, MIC 8 byte long.
+- The random payload has 13 byte length.
+
+
+LED signals:
+
+- Both nodes:
+  - LED 0 on: Application is running.
+
+- Sensor (Device):
+  - LED 1 on: Sensor (Device) is associated to Data Sink (Coordinator).
+  - LED 2 blinking slowly: Data frames are sent (one every 2 seconds).
+
+- Data Sink (Coordinator):
+  - LED 1 on: Network is started.
+  - LED 2 blinking slowly: Data frames are received (one every 2 seconds).
+  - LED 0 blinking fast: Format error on received frame - wrong payload length, or security control byte has a wrong value.
+  - LED 1 blinking fast: Frame with too small frame counter received.
+  - LED 2 blinking fast: MIC of received frame is wrong.
