@@ -534,7 +534,7 @@ static inline type name(__VA_ARGS__)
 extern "C" {
 #endif
 
-#ifdef cplusplus
+#ifdef __cplusplus
 } /* extern "C" */
 #endif
 

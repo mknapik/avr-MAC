@@ -97,6 +97,10 @@ buffer_t *bmm_buffer_alloc(uint8_t size);
  */
 void bmm_buffer_free(buffer_t *pbuffer);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* BMM_INTERFACE_H */
 
 /* EOF */
