@@ -17,7 +17,7 @@
 /*
  * Copyright (c) 2009, Atmel Corporation All rights reserved.
  *
- * Licensed under Atmel’s Limited License Agreement --> EULA.txt
+ * Licensed under AtmelÂ’s Limited License Agreement --> EULA.txt
  */
 
 /* Prevent double inclusion */
@@ -376,7 +376,7 @@ static inline void convert_64_bit_to_byte_array(uint64_t value, uint8_t *data)
 extern "C" {
 #endif
 
-#ifdef cplusplus
+#ifdef __cplusplus
 } /* extern "C" */
 #endif
 
